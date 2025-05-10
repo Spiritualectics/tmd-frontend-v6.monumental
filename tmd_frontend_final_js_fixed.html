@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TMD-AI v6 – Layman Friendly Forecast</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fefefe;
+      color: #222;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 20px;
+      display: block;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .note {
+      font-size: 12px;
+      color: #555;
+      margin-top: -10px;
+      margin-bottom: 15px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #0057e7;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #003ea5;
+    }
+    #result {
+      margin-top: 30px;
+      white-space: pre-wrap;
+      background: #eef;
+      padding: 15px;
+      border-left: 4px solid #0057e7;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h2>TMD-AI v6: Layman-Friendly Terminal Forecast Form</h2>
+
+  <label for="energetic_integrity">Energetic Integrity</label>
+  <input type="number" id="energetic_integrity" step="0.1" />
+  <div class="note">0=None, 1=Very Weak, 2=Weak, 3=Moderate, 4=Strong, 5=Maximum</div>
+
+  <label for="emotional_instability">Emotional Instability</label>
+  <input type="number" id="emotional_instability" step="0.1" />
+  <div class="note">0=Emotionally Stable, 5=Severe Emotional Turmoil</div>
+
+  <label for="symbolic_density">Symbolic Density</label>
+  <input type="number" id="symbolic_density" step="0.1" />
+  <div class="note">0=None, 1=Sparse Symbols, 3=Moderate, 5=Heavy Symbolism in Life Events</div>
+
+  <label for="spiritual_pol">Spiritual Polarity</label>
+  <select id="spiritual_pol">
+    <option value="Positive">Positive</option>
+    <option value="Negative">Negative</option>
+  </select>
+  <div class="note">Is the person’s spiritual energy more positive or negative?</div>
+
+  <label for="guilt_load">Subconscious Guilt Load</label>
+  <input type="number" id="guilt_load" step="0.1" />
+  <div class="note">0=None, 1=Mild, 3=Noticeable, 5=Crushing Guilt</div>
+
+  <label for="dominant_emotion">Dominant Emotion</label>
+  <select id="dominant_emotion">
+    <option value="Fear">Fear</option>
+    <option value="Anger">Anger</option>
+    <option value="Joy">Joy</option>
+    <option value="Sadness">Sadness</option>
+    <option value="Shame">Shame</option>
+    <option value="Peace">Peace</option>
+  </select>
+  <div class="note">Most recurring emotional tone during final years</div>
+
+  <label for="archetype">Psychological Archetype</label>
+  <select id="archetype">
+    <option value="The Rebel">The Rebel</option>
+    <option value="The Sage">The Sage</option>
+    <option value="The Martyr">The Martyr</option>
+    <option value="The Outsider">The Outsider</option>
+    <option value="The Hero">The Hero</option>
+    <option value="The Caregiver">The Caregiver</option>
+  </select>
+  <div class="note">Role or identity the person embodied most in life</div>
+
+  <label for="cause_affiliation">Cause Affiliation</label>
+  <select id="cause_affiliation">
+    <option value="None">None</option>
+    <option value="Political">Political</option>
+    <option value="Religious">Religious</option>
+    <option value="Activism">Activism</option>
+    <option value="Gang/Street Identity">Gang/Street Identity</option>
+  </select>
+  <div class="note">Was the person affiliated with a powerful external cause?</div>
+
+  <label for="location_risk">Location Risk</label>
+  <select id="location_risk">
+    <option value="Safe Zone">Safe Zone</option>
+    <option value="Moderate Risk Zone">Moderate Risk Zone</option>
+    <option value="Conflict Zone">Conflict Zone</option>
+  </select>
+  <div class="note">How physically dangerous was their living location?</div>
+
+  <label for="final_event_imprint">Final Event Imprint</label>
+  <input type="text" id="final_event_imprint" placeholder="e.g., Betrayal, Freedom, Conflict" />
+  <div class="note">Most powerful emotional or spiritual 'event' they carried into death</div>
+
+  <label for="public_perception">Public Perception</label>
+  <select id="public_perception">
+    <option value="Loved">Loved</option>
+    <option value="Feared">Feared</option>
+    <option value="Misunderstood">Misunderstood</option>
+    <option value="Ignored">Ignored</option>
+  </select>
+  <div class="note">How the public perceived them most accurately</div>
+
+  <label for="dream_symbol">Dominant Dream Symbol</label>
+  <select id="dream_symbol">
+    <option value="War">War</option>
+    <option value="Snakes">Snakes</option>
+    <option value="Water">Water</option>
+    <option value="Fire">Fire</option>
+    <option value="Blood">Blood</option>
+  </select>
+  <div class="note">Most recurring image in their dreams or unconscious themes</div>
+
+  <label for="karmic_loop">Karmic Loop (repeating fate?)</label>
+  <select id="karmic_loop">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+  <div class="note">Was their life similar to a previous relative or past narrative?</div>
+
+  <button onclick="generateForecast()">Generate Forecast</button>
+  <div id="result"></div>
+
+  <script>
+    function generateForecast() {
+      const data = {
+        energetic_integrity: parseFloat(document.getElementById("energetic_integrity").value),
+        emotional_instability: parseFloat(document.getElementById("emotional_instability").value),
+        symbolic_density: parseFloat(document.getElementById("symbolic_density").value),
+        spiritual_pol: document.getElementById("spiritual_pol").value,
+        guilt_load: parseFloat(document.getElementById("guilt_load").value),
+        dominant_emotion: document.getElementById("dominant_emotion").value,
+        archetype: document.getElementById("archetype").value,
+        cause_affiliation: document.getElementById("cause_affiliation").value,
+        location_risk: document.getElementById("location_risk").value,
+        final_event_imprint: document.getElementById("final_event_imprint").value,
+        public_perception: document.getElementById("public_perception").value,
+        dream_symbol: document.getElementById("dream_symbol").value,
+        karmic_loop: document.getElementById("karmic_loop").value,
+        api_signature: "TMD_SECRET_KEY_2025"
+      };
+
+      document.getElementById("result").innerText = "Calculating...";
+
+      fetch("https://tmd-ai-v6-monumental-7.onrender.com/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          energetic_integrity: parseFloat(document.getElementById("energetic_integrity").value),
+          emotional_instability: parseFloat(document.getElementById("emotional_instability").value),
+          symbolic_density: parseFloat(document.getElementById("symbolic_density").value),
+          spiritual_pol: document.getElementById("spiritual_pol").value,
+          guilt_load: parseFloat(document.getElementById("guilt_load").value),
+          dominant_emotion: document.getElementById("dominant_emotion").value,
+          archetype: document.getElementById("archetype").value,
+          cause_affiliation: document.getElementById("cause_affiliation").value,
+          location_risk: document.getElementById("location_risk").value,
+          final_event_imprint: document.getElementById("final_event_imprint").value,
+          public_perception: document.getElementById("public_perception").value,
+          dream_symbol: document.getElementById("dream_symbol").value,
+          karmic_loop: document.getElementById("karmic_loop").value,
+          api_signature: "TMD_SECRET_KEY_2025"
+        })
+      })
+      .then(response => response.json())
+      .then(result => {
+        document.getElementById("pdfButton").style.display = "inline-block";
+        document.getElementById("spinner").style.display = "none";
+        document.getElementById("result").innerText = JSON.stringify(result, null, 2);
+      })
+      .catch(error => {
+        document.getElementById("spinner").style.display = "none";
+        document.getElementById("result").innerText = "Error: " + error.message;
+      });
+    }
+
+    // Auto wake-up ping
+    fetch("https://tmd-ai-v6-monumental-7.onrender.com/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          energetic_integrity: parseFloat(document.getElementById("energetic_integrity").value),
+          emotional_instability: parseFloat(document.getElementById("emotional_instability").value),
+          symbolic_density: parseFloat(document.getElementById("symbolic_density").value),
+          spiritual_pol: document.getElementById("spiritual_pol").value,
+          guilt_load: parseFloat(document.getElementById("guilt_load").value),
+          dominant_emotion: document.getElementById("dominant_emotion").value,
+          archetype: document.getElementById("archetype").value,
+          cause_affiliation: document.getElementById("cause_affiliation").value,
+          location_risk: document.getElementById("location_risk").value,
+          final_event_imprint: document.getElementById("final_event_imprint").value,
+          public_perception: document.getElementById("public_perception").value,
+          dream_symbol: document.getElementById("dream_symbol").value,
+          karmic_loop: document.getElementById("karmic_loop").value,
+          api_signature: "TMD_SECRET_KEY_2025"
+        })
+      })
+      .then(response => response.json())
+      .then(result => {
+        document.getElementById("pdfButton").style.display = "inline-block";
+        document.getElementById("spinner").style.display = "none";
+        document.getElementById("result").innerText = JSON.stringify(result, null, 2);
+      })
+      .catch(error => {
+        document.getElementById("spinner").style.display = "none";
+        document.getElementById("result").innerText = "Error: " + error.message;
+      });
+  </script>
+</body>
+</html>
