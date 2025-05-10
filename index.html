@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TMD-AI v6 Monumental Forecast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #222;
+            padding: 20px;
+        }
+        input, select, button {
+            display: block;
+            margin-bottom: 15px;
+            padding: 10px;
+            width: 100%;
+        }
+        button {
+            background-color: #0056b3;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e1e1e1;
+        }
+    </style>
+</head>
+<body>
+    <h2>TMD-AI v6 Monumental Forecast</h2>
+
+    <input type="number" step="0.1" id="energetic_integrity" placeholder="Energetic Integrity (0=Weak, 5=Strong)" />
+    <input type="number" step="0.1" id="emotional_instability" placeholder="Emotional Instability (0=Stable, 5=Volatile)" />
+    <input type="number" step="0.1" id="symbolic_density" placeholder="Symbolic Density (0=None, 5=Heavy)" />
+
+    <select id="spiritual_polarity">
+        <option value="Positive">Positive</option>
+        <option value="Negative">Negative</option>
+    </select>
+
+    <select id="dominant_emotion">
+        <option value="Fear">Fear</option>
+        <option value="Anger">Anger</option>
+        <option value="Joy">Joy</option>
+        <option value="Sadness">Sadness</option>
+    </select>
+
+    <select id="archetype">
+        <option value="The Rebel">The Rebel</option>
+        <option value="The Sage">The Sage</option>
+        <option value="The Martyr">The Martyr</option>
+        <option value="The Guardian">The Guardian</option>
+    </select>
+
+    <select id="cause_affiliation">
+        <option value="None">None</option>
+        <option value="Political">Political</option>
+        <option value="Religious">Religious</option>
+        <option value="Gang/Street Identity">Gang/Street Identity</option>
+        <option value="Activism">Activism</option>
+    </select>
+
+    <select id="location_risk">
+        <option value="Safe Zone">Safe Zone</option>
+        <option value="Moderate Risk Zone">Moderate Risk Zone</option>
+        <option value="Conflict Zone">Conflict Zone</option>
+    </select>
+
+    <input type="text" id="final_event_imprint" placeholder="Final Event Imprint (e.g. Betrayal, Peace)" />
+    <input type="number" step="0.1" id="guilt_load" placeholder="Subconscious Guilt Load (0=None, 5=Extreme)" />
+
+    <select id="public_perception">
+        <option value="Loved">Loved</option>
+        <option value="Feared">Feared</option>
+        <option value="Hated">Hated</option>
+        <option value="Misunderstood">Misunderstood</option>
+    </select>
+
+    <select id="dream_symbol">
+        <option value="War">War</option>
+        <option value="Snakes">Snakes</option>
+        <option value="Water">Water</option>
+        <option value="Fire">Fire</option>
+        <option value="Blood">Blood</option>
+    </select>
+
+    <select id="karmic_loop">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
+
+    <button onclick="generateForecast()">Generate Forecast</button>
+
+    <div id="result"></div>
+
+    <script>
+        function generateForecast() {
+            const data = {
+                energetic_integrity: parseFloat(document.getElementById("energetic_integrity").value),
+                emotional_instability: parseFloat(document.getElementById("emotional_instability").value),
+                symbolic_density: parseFloat(document.getElementById("symbolic_density").value),
+                spiritual_pol: document.getElementById("spiritual_polarity").value,
+                dominant_emotion: document.getElementById("dominant_emotion").value,
+                archetype: document.getElementById("archetype").value,
+                cause_affiliation: document.getElementById("cause_affiliation").value,
+                location_risk: document.getElementById("location_risk").value,
+                final_event_imprint: document.getElementById("final_event_imprint").value,
+                guilt_load: parseFloat(document.getElementById("guilt_load").value),
+                public_perception: document.getElementById("public_perception").value,
+                dream_symbol: document.getElementById("dream_symbol").value,
+                karmic_loop: document.getElementById("karmic_loop").value,
+                api_signature: "TMD_SECRET_KEY_2025"
+            };
+
+            fetch("https://tmd-ai-v6.onrender.com/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(result => {
+                document.getElementById("result").innerText = JSON.stringify(result, null, 2);
+            })
+            .catch(err => {
+                document.getElementById("result").innerText = "Error: Failed to fetch";
+            });
+        }
+    </script>
+</body>
+</html>
